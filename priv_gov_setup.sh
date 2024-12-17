@@ -196,8 +196,7 @@ sed -i "/^\s*voting_period: .*/voting_period: ${new_voting_period}/" $dir_path/p
 
 # Start fairyringd with logging
 cd "$dir_path/fairyring"
-fairyring_log_file="$logs_dir/fairyringd_$timestamp.log"
-# nohup ignite chain serve --reset-once -v --config ./ignite_configs/priv_gov.yml &> "$fairyring_log_file" &
+echo "$(pwd)/scripts/devnet"
 make devnet-up
 
 # Start privgovd with logging

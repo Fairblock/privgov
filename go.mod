@@ -2,7 +2,7 @@ module privgov
 
 go 1.22.7
 
-toolchain go1.23.4
+toolchain go1.22.10
 
 replace (
 	cosmossdk.io/api => github.com/FairBlock/cosmossdk-api v0.7.5
