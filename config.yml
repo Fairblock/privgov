@@ -1,22 +1,56 @@
 version: 1
 validation: sovereign
-accounts: 
+
+accounts:
 - name: alice
   coins:
-  - 20000token
-  - 200000000stake
+  - 2000000000token
+  - 2000000000stake
+  mnemonic: "thought awake grace need recipe erode bullet dust salt breeze rural desk camp deal devote wisdom rotate pledge repair garbage aspect find lens afraid"
 - name: bob
   coins:
-  - 10000token
-  - 100000000stake
+  - 10000000000token
+  - 10000000000stake
+  mnemonic: "alley afraid soup fall idea toss can goose become valve initial strong forward bright dish figure check leopard decide warfare hub unusual join cart"
+- name: chris
+  coins:
+  - 500000000token
+  - 2000000000stake
+  mnemonic: "labor rival put scheme hood south proud unfold spot today control approve degree shell quiz taxi opinion orbit swarm portion matter light uncle mammal"
+- name: donald
+  coins:
+  - 500000000token
+  - 2000000000stake
+- name: eli
+  coins:
+  - 500000000token
+  - 2000000000stake
+- name: fred
+  coins:
+  - 500000000token
+  - 2000000000stake
+
 client:
   openapi:
     path: docs/static/openapi.yml
+
 faucet:
   name: bob
   coins:
-  - 5token
+  - 5000token
   - 100000stake
+
 validators:
 - name: alice
   bonded: 100000000stake
+
+genesis:
+  chain_id: "privgov"
+  app_state:
+    gov:
+      params:
+        channel_id: "channel-0"
+        voting_period: 2m
+        max_deposit_period: 2m
+        max_tally_period: 1m
+        expedited_voting_period: 1m

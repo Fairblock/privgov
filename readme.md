@@ -1,51 +1,39 @@
 # privgov
-**privgov** is a blockchain built using Cosmos SDK and Tendermint and created with [Ignite CLI](https://ignite.com/cli).
 
-## Get started
+**privgov** is a blockchain built using Cosmos SDK and Tendermint and created with [Ignite CLI](https://ignite.com/cli). It is a basic working cosmos chain that uses the Fairblock/cosmos-sdk to enable private governance.
 
-```
-ignite chain serve
-```
+## Integration
 
-`serve` command installs dependencies, builds, initializes, and starts your blockchain in development.
+To use the Fairblock/cosmos-sdk in your project simply add the following in the `replace` clause of your `go.mod` file:
 
-### Configure
+```go
+replace (
+    cosmossdk.io/api => github.com/FairBlock/cosmossdk-api v0.7.5
 
-Your blockchain in development can be configured with `config.yml`. To learn more, see the [Ignite CLI docs](https://docs.ignite.com).
+    github.com/99designs/keyring => github.com/cosmos/keyring v1.2.0
+    // use cosmos fork of keyring
+    github.com/CosmWasm/wasmd => github.com/FairBlock/wasmd v0.50.6-fairyring
+    github.com/Fairblock/fairyring => github.com/FairBlock/fairyring v0.10.2
 
-### Web Frontend
-
-Additionally, Ignite CLI offers both Vue and React options for frontend scaffolding:
-
-For a Vue frontend, use: `ignite scaffold vue`
-For a React frontend, use: `ignite scaffold react`
-These commands can be run within your scaffolded blockchain project. 
-
-
-For more information see the [monorepo for Ignite front-end development](https://github.com/ignite/web).
-
-## Release
-To release a new version of your blockchain, create and push a new tag with `v` prefix. A new draft release with the configured targets will be created.
-
-```
-git tag v0.1
-git push origin v0.1
+    github.com/cosmos/cosmos-sdk => github.com/Fairblock/cosmos-sdk v0.50.8-fairyring-2
+    // dgrijalva/jwt-go is deprecated and doesn't receive security updates.
+    github.com/dgrijalva/jwt-go => github.com/golang-jwt/jwt/v4 v4.4.2
+    // Fix upstream GHSA-h395-qcrw-5vmq and GHSA-3vp4-m3rf-835h vulnerabilities.
+    github.com/gin-gonic/gin => github.com/gin-gonic/gin v1.9.1
+    github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
+)
 ```
 
-After a draft release is created, make your final changes from the release page and publish it.
+## Setting up the test environment
 
-### Install
-To install the latest version of your blockchain node's binary, execute the following command on your machine:
+To setup the testing environment, simply run the `priv_gov_setup.sh` file and follow along with the prompts. The script does the following things:
 
-```
-curl https://get.ignite.com/username/privgov@latest! | sudo bash
-```
-`username/privgov` should match the `username` and `repo_name` of the Github repository to which the source code was pushed. Learn more about [the install process](https://github.com/allinbits/starport-installer).
+1. Sets up and starts the fairying chain (with all its bells and whistles)
+2. Sets up and starts the privgov chain
+3. Creates a IBC channel between the fairyring chain and privgov chain and starts the Hermes relayer
 
-## Learn more
+## Proposal and Voting
 
-- [Ignite CLI](https://ignite.com/cli)
-- [Tutorials](https://docs.ignite.com/guide)
-- [Ignite CLI docs](https://docs.ignite.com)
-- [Cosmos SDK docs](https://docs.cosmos.network)
-- [Developer Chat](https://discord.gg/ignite)
+A governance proposal can be created by executing the tx `privgovd tx gov submit-proposal [path-to-proposal-file]`. A sample proposal file can be found in `draft_proposal.json`. Once the proposal is created, query the proposal to get the unique identity and pubkey for the proposal.
+
+You can then use the `encrypt-vote` functionality to generate your encrypted vote. To submit the encrypted vote, simply mke the tx `privgovd tx gov vote-encrypted [proposal-id] [encrypted data]`. Once the vote is submitted, wait for the voting period to be over and the votes to be tallied.
