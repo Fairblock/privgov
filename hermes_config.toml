@@ -1,12 +1,12 @@
 [global]
-log_level = 'debug'
+log_level = 'info'
 
 [mode]
 
 [mode.clients]
 enabled = true
 refresh = true
-misbehaviour = false
+misbehaviour = true
 
 [mode.connections]
 enabled = false
@@ -16,7 +16,7 @@ enabled = false
 
 [mode.packets]
 enabled = true
-clear_interval = 0
+clear_interval = 100
 clear_on_start = true
 tx_confirmation = false
 auto_register_counterparty_payee = false
