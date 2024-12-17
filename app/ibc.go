@@ -7,6 +7,7 @@ import (
 	servertypes "github.com/cosmos/cosmos-sdk/server/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
+	"github.com/cosmos/cosmos-sdk/x/gov"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	govv1beta1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
 	paramstypes "github.com/cosmos/cosmos-sdk/x/params/types"
@@ -161,6 +162,10 @@ func (app *App) registerIBCModules(appOpts servertypes.AppOptions) error {
 		AddRoute(icahosttypes.SubModuleName, icaHostIBCModule)
 
 	// this line is used by starport scaffolding # ibc/app/module
+
+	// Add gov module to IBC Router
+	govIBCModule := ibcfee.NewIBCMiddleware(gov.NewIBCModule(app.GovKeeper), app.IBCFeeKeeper)
+	ibcRouter.AddRoute(govtypes.ModuleName, govIBCModule)
 
 	app.IBCKeeper.SetRouter(ibcRouter)
 
