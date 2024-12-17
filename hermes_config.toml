@@ -93,7 +93,7 @@ denominator = '3'
 
 [chains.gas_price]
 price = 1
-denom = 'stake'
+denom = 'ufairy'
 
 [chains.address_type]
 derivation = 'cosmos'

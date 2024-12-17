@@ -192,7 +192,7 @@ make devnet-down
 echo "Enter the new voting period (e.g., 2s, 30m, 240h):"
 read new_voting_period
 
-sed -i "s/voting_period: .*/voting_period: ${new_voting_period}/" $dir_path/privgov/config.yml
+sed -i "/^\s*voting_period: .*/voting_period: ${new_voting_period}/" $dir_path/privgov/config.yml
 
 # Start fairyringd with logging
 cd "$dir_path/fairyring"
@@ -229,17 +229,16 @@ if [[ $? -ne 0 ]]; then
   exit 1
 fi
 
-hermes keys add --key-name fk --chain fairytest-1 --mnemonic-file "$mnemonic_file" --overwrite
+hermes keys add --key-name fk --chain fairyring_devnet --mnemonic-file "$mnemonic_file" --overwrite
 if [[ $? -ne 0 ]]; then
-  echo "Failed to add fk key for fairytest-1."
+  echo "Failed to add fk key for fairyring_devnet."
   exit 1
 fi
 
-
-sleep 30
+sleep 5
 
 # Create a new IBC channel
-hermes create channel --new-client-connection --a-chain privgov --b-chain fairytest-1 --a-port gov --b-port keyshare --channel-version keyshare-1 --yes
+hermes create channel --new-client-connection --a-chain privgov --b-chain fairyring_devnet --a-port gov --b-port keyshare --channel-version keyshare-1 --yes
 if [[ $? -ne 0 ]]; then
   echo "Failed to create a new IBC channel."
   exit 1
