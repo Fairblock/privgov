@@ -24,6 +24,18 @@ replace (
 )
 ```
 
+Finally, the custom `gov` module has to be registered with the IBC router. To do that, simply add the route in the `app/ibc.go` file:
+
+```go
+    // Add gov module to IBC Router
+    govIBCModule := ibcfee.NewIBCMiddleware(gov.NewIBCModule(app.GovKeeper), app.IBCFeeKeeper)
+    ibcRouter.AddRoute(govtypes.ModuleName, govIBCModule)
+
+    app.IBCKeeper.SetRouter(ibcRouter)
+```
+
+**NOTE:** The route must be added to the `ibcrouter` before calling the `SetRouter()` function
+
 ## Setting up the test environment
 
 To setup the testing environment, simply run the `priv_gov_setup.sh` file and follow along with the prompts. The script does the following things:
