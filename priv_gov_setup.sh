@@ -196,7 +196,6 @@ sed -i "/^\s*voting_period: .*/voting_period: ${new_voting_period}/" $dir_path/p
 
 # Start fairyringd with logging
 cd "$dir_path/fairyring"
-echo "$(pwd)/scripts/devnet"
 make devnet-up
 
 # Start privgovd with logging
