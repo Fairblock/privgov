@@ -57,7 +57,7 @@ declare -A git_repos=(
 declare -A branches=(
   # ["cosmos-sdk"]="v0.50.8-fairyring-2"
   ["fairyring"]="privgov-demo"
-  ["fairyringclient"]="v0.7.0"
+  ["fairyringclient"]="general-keyshare"
   ["ShareGenerator"]="main"
   ["privgov"]="main"
 )
