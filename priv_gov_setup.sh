@@ -12,6 +12,21 @@ if [[ "${BASH_VERSINFO[0]}" -lt 4 ]]; then
     exit 1
 fi
 
+# Required Go version
+REQUIRED_GO_VERSION="1.22.10"
+
+# Get the installed Go version
+INSTALLED_GO_VERSION=$(go version | awk '{print $3}' | sed 's/go//')
+
+# Check if the installed Go version matches the required version
+if [ "$INSTALLED_GO_VERSION" != "$REQUIRED_GO_VERSION" ]; then
+    echo "ERROR: Go version $REQUIRED_GO_VERSION is required. Installed version: $INSTALLED_GO_VERSION."
+    exit 1
+else
+    echo "Go version $INSTALLED_GO_VERSION is meets requirement."
+fi
+# Proceed with the rest of your script
+
 # Function to ask for user confirmation
 ask_user() {
   read -p "Directory $dir_path already exists. Do you want to continue? [y/N]: " decision
