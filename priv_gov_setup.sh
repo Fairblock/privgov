@@ -4,6 +4,14 @@
 dir_name="private_gov_setup"
 dir_path="$HOME/$dir_name"
 
+
+# Check the Bash version
+if [[ "${BASH_VERSINFO[0]}" -lt 4 ]]; then
+    echo "This script requires Bash version 4.0 or higher. You are using Bash ${BASH_VERSION}."
+    echo "Kindly update your bash and try again"
+    exit 1
+fi
+
 # Function to ask for user confirmation
 ask_user() {
   read -p "Directory $dir_path already exists. Do you want to continue? [y/N]: " decision
@@ -108,6 +116,7 @@ for repo_name in "${!git_repos[@]}"; do
   install_cmd="${install_cmds[$repo_name]}"
   if [[ -d "$repo_name" ]]; then
     cd "$repo_name"
+    rm go.sum
     go mod tidy || { echo "go mod tidy failed for $repo_name"; exit 1; }
     cd ..
   fi
@@ -192,7 +201,7 @@ make devnet-down
 echo "Enter the new voting period (e.g., 2s, 30m, 240h):"
 read new_voting_period
 
-sed -i "/^\s*voting_period: .*/voting_period: ${new_voting_period}/" $dir_path/privgov/config.yml
+sed -i'' -e '/^[[:space:]]*voting_period:/s/: .*/: '"${new_voting_period}"'/' "$dir_path/privgov/config.yml"
 
 # Start fairyringd with logging
 cd "$dir_path/fairyring"
