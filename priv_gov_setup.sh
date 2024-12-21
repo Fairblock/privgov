@@ -257,7 +257,7 @@ if [[ $? -ne 0 ]]; then
   exit 1
 fi
 
-sleep 20
+sleep 40
 
 # Create a new IBC channel
 hermes create channel --new-client-connection --a-chain privgov --b-chain fairyring_devnet --a-port gov --b-port keyshare --channel-version keyshare-1 --yes
