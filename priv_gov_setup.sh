@@ -68,7 +68,7 @@ fi
 
 # Declare an array with the git repos
 declare -A git_repos=(
-  # ["cosmos-sdk"]="git@github.com:Fairblock/cosmos-sdk.git"
+  ["cosmos-sdk"]="git@github.com:Fairblock/cosmos-sdk.git"
   # ["encrypter"]="git@github.com:Fairblock/encrypter.git"
   ["fairyring"]="git@github.com:Fairblock/fairyring.git"
   ["privgov"]="git@github.com:Fairblock/privgov.git"
@@ -78,7 +78,7 @@ declare -A git_repos=(
 
 # Declare an array with branches to be checked out
 declare -A branches=(
-  # ["cosmos-sdk"]="v0.50.8-fairyring-2"
+  ["cosmos-sdk"]="privgov-demo"
   ["fairyring"]="privgov-demo"
   ["fairyringclient"]="general-keyshare"
   ["ShareGenerator"]="main"
