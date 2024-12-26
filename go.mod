@@ -12,7 +12,7 @@ replace (
 	github.com/CosmWasm/wasmd => github.com/FairBlock/wasmd v0.50.6-fairyring
 	github.com/Fairblock/fairyring => github.com/FairBlock/fairyring v0.10.2
 
-	github.com/cosmos/cosmos-sdk => github.com/Fairblock/cosmos-sdk v0.50.8-fairyring-2
+	github.com/cosmos/cosmos-sdk => ../cosmos-sdk
 	// dgrijalva/jwt-go is deprecated and doesn't receive security updates.
 	// TODO: remove it: https://github.com/cosmos/cosmos-sdk/issues/13134
 	github.com/dgrijalva/jwt-go => github.com/golang-jwt/jwt/v4 v4.4.2
@@ -81,7 +81,7 @@ require (
 	github.com/DataDog/datadog-go v3.2.0+incompatible // indirect
 	github.com/DataDog/zstd v1.5.5 // indirect
 	github.com/FairBlock/DistributedIBE v0.0.0-20231211202607-d457df6869db // indirect
-	github.com/Fairblock/fairyring v0.0.0-00010101000000-000000000000 // indirect
+	github.com/Fairblock/fairyring v0.10.2 // indirect
 	github.com/Microsoft/go-winio v0.6.1 // indirect
 	github.com/antlr4-go/antlr/v4 v4.13.0 // indirect
 	github.com/aws/aws-sdk-go v1.44.224 // indirect
