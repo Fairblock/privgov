@@ -3,12 +3,12 @@
 echo "Submitting proposal"
 privgovd tx gov submit-proposal draft_proposal.json --from fred --chain-id privgov --yes
 
-sleep 3
+sleep 10
 
 PROPOSAL_ID=$(privgovd q gov proposals --output json | jq '.proposals | length')
 PROPOSAL_INDEX=$((PROPOSAL_ID - 1))
 
-sleep 3
+sleep 10
 
 PUBKEY=$(privgovd q gov proposals --output json | jq -r ".proposals[$PROPOSAL_INDEX].pubkey")
 ID=$(privgovd q gov proposals --output json | jq -r ".proposals[$PROPOSAL_INDEX].identity")
