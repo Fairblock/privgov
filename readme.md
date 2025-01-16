@@ -1,10 +1,63 @@
-# privgov
+# Quickstart - Fairblock Module Integration with Cosmos Chains
 
-**privgov** is a blockchain built using Cosmos SDK and Tendermint and created with [Ignite CLI](https://ignite.com/cli). It is a basic working cosmos chain that uses the Fairblock/cosmos-sdk to enable private governance.
+Welcome to the Fairblock <> Cosmos Integration Tutorial. Please note that the App Quickstart within the [Fairblock docs](https://docs.fairblock.network/docs/welcome/quickstart/cosmos_chain) is the exact same content as this README. They are placed in different locations for convenience to the reader.
 
-## Integration
+> ‼️ All code within this tutorial is purely educational, and it is up to the readers discretion to build their applications following industry standards, practices, and applicable regulations.
 
-To use the Fairblock/cosmos-sdk in your project simply add the following in the `replace` clause of your `go.mod` file:
+Fairblock is a dynamic confidentiality network that delivers high performance, low overhead, and custom confidential execution to blockchain applications. Dynamic confidentiality unlocks the encrypted economy — onchain applications designed for real-world use cases, like optimizable financial markets, competitive PVP markets like auctions, predictions, and gaming, and privacy-preserving inference.
+
+V1 is live on testnet with bespoke MPEC and threshold identity-based encryption (tIBE), which offer conditional confidentiality dependent on users’ needs.
+
+A walk through of this tutorial, alongside context on Fairblock, EVMs, and Comsos Chains is provided in the video below. If you prefer learning by reading on your own, feel free to skip it and continue onward in this README!
+
+[![Fairblock tIBE with EVMs - Orbit Chain Integration Tutorial](https://img.youtube.com/vi/gIzPgSw11uU&ab_channel=FairblockNetwork/0.jpg)](TODO: record and paste new video here)
+
+The core elements of Fairblock are:
+
+1. Fairyring - A dynamic and decentralized network that hosts app-specific secure and performant confidential computing.
+2. Fairykit - A module that enables confidential computing for applications within our native ecosystem or across external chains.
+
+The first goal of this tutorial is to showcase the high level options to integrate Fairblock into Cosmos Chains using the respective Fairykit. 
+
+## Cosmos Integration Options
+
+The Cosmos Fairykit integrates using the following one or more of the following methods:
+
+1. Module Integration
+2. Smart Contract Integration
+3. Co-Processing Integration
+
+The schematic below shows a high-level overview on how Cosmos Chains integrate with Fairblock. A key aspect to note is that all of these integration methods provide the functionality to interact with Fairyring, and there can be underlying application logic working with these integrations.
+
+<!-- TODO: Get schematic -->
+
+## An Intro to `privgov`
+
+Module Integration refers to integrating Fairblock modules, such as `x/pep`, which is used for general encryption functionality.
+
+Smart Contract Integration refers to deploying smart contracts into an environment, WASM, etc., such that it communicates with the Fairyring network for confidential computation.
+
+<!-- TODO: Describe co-processing -->
+
+In today's tutorial, we will be covering the usage of `privgov`, a blockchain built using Cosmos SDK and Tendermint, and a mixture of the `x/pep` module created with [Ignite CLI](https://ignite.com/cli). It is a basic working cosmos chain that uses the Fairblock/cosmos-sdk to enable private governance. 
+
+<!-- TODO: need to fact check the below with apocalypse -->
+<!-- This was chosen as the easiest path for other projects to adopt since Cosmos SDK chains have their own initial `gov` module. The core logic is essentially a fork of the `gov` module with added functionality. -->
+
+Governance is an important aspect within blockchains. In the Cosmos ecosystems, we can see challenges with today's solutions including:
+
+- Colluding parties
+- Social and monetary pressures for people to vote a certain way
+
+The `privgov` repo was created to showcase an easy-to-use solution to incorporate truly fair, and credible governance systems. Using `privgov` in a Cosmos chain enable encrypted voting, getting these systems closer to true democracy.
+
+> The core code outlined in the next section can be incorporated into your own Cosmos chain such that `privgov` enables encrypted voting.
+
+## Integrating `privgov` into a Cosmos SDK Project
+
+The core logic for `privgov` can be incorporated into your own Cosmos SDK project by following these steps.
+
+1. Add the following in the `replace` clause of your `go.mod` file:
 
 ```go
 replace (
@@ -24,7 +77,7 @@ replace (
 )
 ```
 
-Finally, the custom `gov` module has to be registered with the IBC router. To do that, simply add the route in the `app/ibc.go` file:
+2. The custom `gov` module has to be registered with the IBC router. To do that, simply add the route in the `app/ibc.go` file:
 
 ```go
     // Add gov module to IBC Router
@@ -34,17 +87,19 @@ Finally, the custom `gov` module has to be registered with the IBC router. To do
     app.IBCKeeper.SetRouter(ibcRouter)
 ```
 
-**NOTE:** The route must be added to the `ibcrouter` before calling the `SetRouter()` function
+> The route must be added to the `ibcrouter` before calling the `SetRouter()` function
+
+That's it! You now should have the `privgov` functionality incorporated into your cosmos chain. Now we will continue with the tutorial to test and showcase the `privgov` in action.
 
 ## Setting up the test environment
 
 To setup the testing environment, simply run the `priv_gov_setup.sh` file and follow along with the prompts. The script does the following things:
 
 1. Sets up and starts the fairying chain (with all its bells and whistles)
-2. Sets up and starts the privgov chain
+2. Sets up and starts the `privgov` chain
 3. Creates a IBC channel between the fairyring chain and privgov chain and starts the Hermes relayer
 
-> It is recommended to use a short time frame for quick iterative tests, such as 2min or so.
+> It is recommended to use a short time frame for quick iterative tests, such as 3min or so.
 
 ## ℹ️ For MacOS Systems
 
@@ -55,6 +110,7 @@ If you are operating on a MacOS system, you may need to carry out the following 
     - [`hermes`](https://hermes.informal.systems/quick-start/installation.html#install-by-downloading)
     - [`rust`](https://www.rust-lang.org/tools/install)
 2. bash version: this tutorial requires an updated bash version compared to the default MacOS 3.x version. If it’s less than 4.x then the script will exit.
+
 It is up to you to install a higher version in a way that works for you. For example, one of our devs have simply had an updated version of bash installed elsewhere, and used that to run it. For them, they then had to use the updated bash version as per its specific file location:
 
 ```bash
@@ -77,11 +133,13 @@ instead of just running
 
 A governance proposal can be created by executing the tx `privgovd tx gov submit-proposal [path-to-proposal-file] --from [user] --chain-id privgov`. A sample proposal file can be found in `draft_proposal.json`. 
 
-> ℹ️ When specifying the from user, or users in general throughout this tutorial, do not use `bob`. This user has some problematic aspects that can cause the tutorial to not run, and has been seen in other cosmos sdk chain tests.
+So to start the governance process, make a governance proposal by running the following command:
 
 ```bash
 privgovd tx gov submit-proposal draft_proposal.json --from fred --chain-id privgov
 ```
+
+> ℹ️ When specifying the from user, or users in general throughout this tutorial, do not use `bob`. This user has some problematic aspects that can cause the tutorial to not run, and has been seen in other cosmos sdk chain tests.
 
 Once the proposal is created, query the proposal to assess its details. You can now get the unique identity and pubkey for the proposal.
 
@@ -91,7 +149,7 @@ privgovd q gov proposals
 
 <!-- TODO: HASH GET A SCREENSHOT OF WHAT THE OUTPUT COULD LOOK LIKE -->
 
-You can then use the `encrypt-vote` functionality to encrypt your vote. Simply use the bash command to submit the tx:
+You can then use the `encrypt-vote` functionality to encrypt your vote. Use the bash command and details from querying the proposal, such as the `identity`, and `pubkey` to submit the tx:
 
 ```bash
 fairyringd encrypt-vote yes <identity> <random salt> <pubkey>
@@ -104,7 +162,7 @@ fairyringd encrypt-vote yes 1/rq 1234 b5b8a299700e44ae0b0ffb54903a253555f60babdf
 ```
 
 <!-- TODO: Write up a brief blurb on submitting the encrypted vote -->
-
+Now that you have encrypted your 'yes' vote, and have a resultant ciphertext, you can now vote on the respective proposal. Run the following command with appropriate vars from your proposal query.
 
 ```bash
 privgovd tx gov vote-encrypted [proposal-id] [encrypted data]
@@ -117,4 +175,27 @@ privgovd tx gov vote-encrypted 1 6167652d656e6372797074696f6e2e6f72672f76310a2d3
  --chain-id privgov
 ```
 
-Once the vote is submitted, wait for the voting period to be over and the votes to be tallied.
+Once the vote is submitted, wait for the voting period to be over and the votes to be tallied. You can query the proposal whenever to see the proposal status, again by using:
+
+```bash
+privgovd q gov proposals
+```
+
+Once the voting period has ended, the proposal final status will be hit. It will either be FAIL or SUCCESS. If you voted 'yes', then the proposal should have passed.
+
+<!-- TODO: show image of a successful vote -->
+
+## Congratulations
+
+You have successfully carried out a private governance proposal, submitted an encrypted vote, and saw that it successfully passed!
+
+Let's recap what you've accomplished through this quickstart:
+
+- Shown and understood how to implement the `privgov` functionality, using Fairblock, in your own Cosmos SDK chain.
+- Ran a successful private governance proposal
+- Submitted successful encrypted votes to said proposal
+
+Now that you have gone through the quickstart, feel free to dig into other tutorials or build with fellow Fairblock devs!
+
+For more specific questions, please reach out either on [Discord](TODO-GET-LINK) or our [open issues repo](TODO-GET-LINK).
+
