@@ -9,9 +9,12 @@ Welcome to the Fairblock <> Cosmos Integration Tutorial. Please note that the Ap
 
 A walk through of this tutorial, alongside context on Fairblock, EVMs, and Cosmos Chains is provided in the video below. If you prefer learning by reading on your own, feel free to skip it and continue onward in this README!
 
+<div align="center">
 
-[![Fairblock tIBE with EVMs - Orbit Chain Integration Tutorial](https://img.youtube.com/vi/gIzPgSw11uU&ab_channel=FairblockNetwork/0.jpg)](TODO: record and paste new video here)
 
+[![Fairblock tIBE with EVMs - Orbit Chain Integration Tutorial](./assets/Cosmos_Quickstart.png)](https://www.youtube.com/watch?v=nV5fipxzOhY&ab_channel=FairblockNetwork)
+
+</div>
 
 For more information on Fairblock, make sure to check out the [docs](https://docs.fairblock.network/docs/welcome/Vision)!
 
@@ -288,4 +291,4 @@ Let's recap what you've accomplished through this quickstart:
 Now that you have gone through the quickstart, feel free to dig into other tutorials or build with fellow Fairblock devs!
 
 
-For more specific questions, please reach out either on [Discord](TODO-GET-LINK) or our [open issues repo](TODO-GET-LINK).
+For more specific questions, please reach out either on [Discord](https://discord.gg/jhNBCCAMPK) or our [open issues repo](TODO-GET-LINK).
